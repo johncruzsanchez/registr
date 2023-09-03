@@ -1,0 +1,55 @@
+<ion-content>
+
+  <app-header></app-header>
+  <app-logo></app-logo>
+
+  <h2 class="ion-text-center ion-no-margin">login</h2>
+
+  <div class="content">
+    <div class="d-flex-center">
+      <form (keyup.enter)=" sudmit()" (ngSubmit)="sudmit()" class="ion-text-center">
+
+        <app-custom-imput [control]="form.controls.name" type="texto" label="nombre" icon="person-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.dirty">
+          <div *ngIf="form.controls.name.errors?.['required']">Ingresa tu name</div>
+          <div *ngIf="form.controls.name.errors?.['minlength']">ingresa un nombre valido</div>
+        </div>
+
+        <app-custom-imput [control]="form.controls.email" type="email" label="Correo" icon="mail-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.dirty">
+          <div *ngIf="form.controls.email.errors?.['required']">Ingresa tu email</div>
+          <div *ngIf="form.controls.email.errors?.['email']">ingresa un email valido</div>
+        </div>
+
+
+        <app-custom-imput [control]="form.controls.password" type="password" label="Constraseña" icon="lock-closed-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.dirty">
+          <div *ngIf="form.controls.password.errors?.['required']">Ingresa tu password</div>
+        </div>
+        <app-custom-imput [control]="form.controls.confirmPassword" type="password" label="confirmar contraseña" icon="lock-closed-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.confirmPassword.errors && form.controls.confirmPassword.dirty">
+          <div *ngIf="form.controls.confirmPassword.errors?.['required']">Ingresa tu confirmPassword</div>
+          <div *ngIf="form.controls.confirmPassword.errors?.['noMarch']">ta malo tu confirmPassword</div>
+
+        </div>
+
+
+        <ion-button class="ion-margin-vertical" [disabled]="form.invalid" type="submit" shape="round">Acceder
+          <ion-icon slot="end" name="log-in-outline"></ion-icon>
+        </ion-button>
+
+
+        <div class="sing-up">
+          <div>¿No tienes cuenta ?</div>
+          <ion-button routerLink="sing-up" class="ion-margin-vertical" shape="round">
+            Registrate
+            <ion-icon slot="end" name="person-add-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </form>
+    </div>
+
+
+  </div>
+
+</ion-content>
