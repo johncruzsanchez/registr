@@ -25,10 +25,12 @@
           <div *ngIf="form.controls.name.errors?.['minlength']">ingresa un nombre valido</div>
         </div>
 
-        <app-custom-imput [control]="form.controls.email" type="email" label="Correo" icon="mail-outline"></app-custom-imput>
+        <app-custom-imput [control]="form.controls.email" type="email" label="Correo" icon="mail-outline">
+          <input type="email" pattern="^[a-zA-Z0-9._%+-]+@(duocuc\.cl|profesor\.duoc\.cl)$">
+        </app-custom-imput>
         <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.dirty">
-          <div *ngIf="form.controls.email.errors?.['required']">Ingresa tu email</div>
-          <div *ngIf="form.controls.email.errors?.['email']">ingresa un email valido</div>
+          <div *ngIf="form.controls.email.errors?.['required']">Ingresa tu correo electrónico</div>
+          <div *ngIf="form.controls.email.errors?.['pattern']">Ingresa un correo electrónico válido (@duocuc.cl o @profesor.duoc.cl)</div>
         </div>
 
 

@@ -13,7 +13,7 @@ import { CustomValidators } from 'src/app/utils/custon-validators';
 export class SingUpPage implements OnInit {
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|profesor\.duoc\.cl)$/)]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl(''),
   })
@@ -61,7 +61,7 @@ export class SingUpPage implements OnInit {
         console.error(error);
         this.utilsSvs.presentToast({
           message: 'Error en el registro: ' + error.message,
-          duration: 1500,
+          duration: 2500,
           color: 'danger',
           icon: 'alert-circle-outline',
         });
