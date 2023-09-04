@@ -23,6 +23,13 @@ export class FirebaseService {
 
   singUP(user: User) {
     return this.auth.createUserWithEmailAndPassword(user.email, user.password)
+      .then(async (credential) => {
+        const userCredential = credential.user;
+        if (userCredential) {
+          await this.updateUser({ displayName: user.name });
+        }
+        return credential;
+      });
   }
 
   updateUser(user: any) {

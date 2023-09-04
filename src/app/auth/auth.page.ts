@@ -26,45 +26,54 @@ export class AuthPage implements OnInit {
   }
 
 
-  sudmit(){
-    if(this.form.valid){
-      this.utilsSvs.presentLoading({ message: 'Autenticando....'})
-      this.firebaseSvc.login(this.form.value as User).then(async res =>{
-        console.log(res);
-        
-        let user: User ={
-          uid: res.user.uid,
-          name: res.user.displayName,
-          email: res.user.email,
-          
+  sudmit() {
+    if (this.form.valid) {
+      this.utilsSvs.presentLoading({ message: 'Autenticando....' })
+      this.firebaseSvc.login(this.form.value as User).then(async res => {
+        console.log('Resultado de la autenticación:', res); // Agrega esta línea
+  
+        if (res && res.user) {
+          console.log('Usuario autenticado:', res.user); // Agrega esta línea
+  
+          let user: User = {
+            uid: res.user.uid,
+            name: res.user.displayName,
+            email: res.user.email,
+          }
+  
+          this.utilsSvs.setElementInLocalstorage('user', user);
+          this.utilsSvs.routerLink('/tabs/home')
+          this.utilsSvs.dismissLoading();
+  
+          this.utilsSvs.presentToast({
+            message: `Te damos la bienvenida ${user.name}`,
+            duration: 2500,
+            color: 'primary',
+            icon: 'person-outline',
+          })
+          this.form.reset()
+        } else {
+          console.log('No se encontró el usuario'); // Agrega esta línea en caso de que no se encuentre el usuario
+          this.utilsSvs.dismissLoading();
+          this.utilsSvs.presentToast({
+            message: 'Error: Usuario no encontrado',
+            duration: 1500,
+            color: 'primary',
+            icon: 'alert-circle-outline',
+          })
+          this.utilsSvs.dismissLoading();
         }
-
-        this.utilsSvs.setElementInLocalstorage('user',user ); ///user
-        this.utilsSvs.routerLink('/tabs/home')
-
-        this.utilsSvs.dismissLoading();
-
-        this.utilsSvs.presentToast({
-          message:'te damos la bienvenida ${user.name} ',
-          duration: 1500,
-          color:'primary',
-          icon:'person-outline',
-        })
-        this.form.reset()
-      },error =>{
+      }, error => {
+        console.error('Error en la autenticación:', error); // Agrega esta línea para mostrar errores en la consola
         this.utilsSvs.dismissLoading();
         this.utilsSvs.presentToast({
-          message:'error',
+          message: 'Error',
           duration: 1500,
-          color:'primary',
-          icon:'alert-circle-outline',
+          color: 'primary',
+          icon: 'alert-circle-outline',
         })
         this.utilsSvs.dismissLoading();
-      }
-      )
-
-
-      
+      })
     }
   }
 }

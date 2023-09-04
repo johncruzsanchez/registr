@@ -9,7 +9,7 @@
     <div class="d-flex-center">
 
 
-      <form (keyup.enter)=" sudmit()" (ngSubmit)="sudmit()" class="ion-text-center">
+      <form (keyup.enter)=" submit()" (ngSubmit)="submit()" class="ion-text-center">
 
         <app-custom-imput  [control]="form.controls.name" type="texto" label="Nombre" icon="person-outline"></app-custom-imput>
         <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.dirty">
