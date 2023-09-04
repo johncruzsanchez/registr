@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl,FormGroup,Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase.service';
 import { UtilsService } from '../services/utils.service';
 import { User } from '../models/user.model';
@@ -12,9 +12,9 @@ import { User } from '../models/user.model';
 export class AuthPage implements OnInit {
 
 
-  form = new FormGroup ({
-    email:new FormControl('', [Validators.required, Validators.email]),
-    password:new FormControl('', [Validators.required]),
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   })
 
   constructor(
@@ -26,45 +26,49 @@ export class AuthPage implements OnInit {
   }
 
 
-  sudmit(){
-    if(this.form.valid){
-      this.utilsSvs.presentLoading({ message: 'Autenticando....'})
-      this.firebaseSvc.login(this.form.value as User).then(async res =>{
-        console.log(res);
-        
-        let user: User ={
+  sudmit() {
+    if (this.form.valid) {
+      this.utilsSvs.presentLoading({ message: 'Autenticando....' });
+
+      this.firebaseSvc.login(this.form.value as User).then(async res => {
+        const user = {
           uid: res.user.uid,
-          name: res.user.displayName,
+          name: res.user.displayName, // Esto debería ser el nombre del usuario en Firebase
           email: res.user.email,
-          
+        };
+
+        if (user.name) {
+          // Si el usuario tiene un nombre, muestra un mensaje de bienvenida personalizado
+          this.utilsSvs.presentToast({
+            message: `Te damos la bienvenida, ${user.name}!`,
+            duration: 1500,
+            color: 'primary',
+            icon: 'person-outline',
+          });
+        } else {
+          // Si el usuario no tiene un nombre, muestra un mensaje genérico o redirige para configurar su nombre
+          this.utilsSvs.presentToast({
+            message: 'Te damos la bienvenida!',
+            duration: 1500,
+            color: 'primary',
+            icon: 'person-outline',
+          });
+
+          // Opcional: Puedes redirigir al usuario a una página para configurar su nombre aquí
         }
 
-        this.utilsSvs.setElementInLocalstorage('user',user ); ///user
-        this.utilsSvs.routerLink('/tabs/home')
-
-        this.utilsSvs.dismissLoading();
-
-        this.utilsSvs.presentToast({
-          message:'te damos la bienvenida ${user.name} ',
-          duration: 1500,
-          color:'primary',
-          icon:'person-outline',
-        })
-        this.form.reset()
-      },error =>{
+        // Resto del código
+      }).catch(error => {
+        // Manejo de errores
         this.utilsSvs.dismissLoading();
         this.utilsSvs.presentToast({
-          message:'error',
+          message: 'Error',
           duration: 1500,
-          color:'primary',
-          icon:'alert-circle-outline',
-        })
+          color: 'primary',
+          icon: 'alert-circle-outline',
+        });
         this.utilsSvs.dismissLoading();
-      }
-      )
-
-
-      
+      });
     }
   }
 }
