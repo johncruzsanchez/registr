@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl,FormGroup,Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase.service';
 import { UtilsService } from '../services/utils.service';
 import { User } from '../models/user.model';
@@ -11,10 +11,9 @@ import { User } from '../models/user.model';
 })
 export class AuthPage implements OnInit {
 
-
-  form = new FormGroup ({
-    email:new FormControl('', [Validators.required, Validators.email]),
-    password:new FormControl('', [Validators.required]),
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email, this.emailDomainValidator]),
+    password: new FormControl('', [Validators.required]),
   })
 
   constructor(
@@ -25,26 +24,25 @@ export class AuthPage implements OnInit {
   ngOnInit() {
   }
 
-
-  sudmit() {
+  submit() {
     if (this.form.valid) {
       this.utilsSvs.presentLoading({ message: 'Autenticando....' })
       this.firebaseSvc.login(this.form.value as User).then(async res => {
-        console.log('Resultado de la autenticación:', res); // Agrega esta línea
-  
+        console.log('Resultado de la autenticación:', res);
+
         if (res && res.user) {
-          console.log('Usuario autenticado:', res.user); // Agrega esta línea
-  
+          console.log('Usuario autenticado:', res.user);
+
           let user: User = {
             uid: res.user.uid,
             name: res.user.displayName,
             email: res.user.email,
           }
-  
+
           this.utilsSvs.setElementInLocalstorage('user', user);
           this.utilsSvs.routerLink('/tabs/home')
           this.utilsSvs.dismissLoading();
-  
+
           this.utilsSvs.presentToast({
             message: `Te damos la bienvenida ${user.name}`,
             duration: 2500,
@@ -53,7 +51,7 @@ export class AuthPage implements OnInit {
           })
           this.form.reset()
         } else {
-          console.log('No se encontró el usuario'); // Agrega esta línea en caso de que no se encuentre el usuario
+          console.log('No se encontró el usuario');
           this.utilsSvs.dismissLoading();
           this.utilsSvs.presentToast({
             message: 'Error: Usuario no encontrado',
@@ -64,7 +62,7 @@ export class AuthPage implements OnInit {
           this.utilsSvs.dismissLoading();
         }
       }, error => {
-        console.error('Error en la autenticación:', error); // Agrega esta línea para mostrar errores en la consola
+        console.error('Error en la autenticación:', error);
         this.utilsSvs.dismissLoading();
         this.utilsSvs.presentToast({
           message: 'Error',
@@ -75,5 +73,16 @@ export class AuthPage implements OnInit {
         this.utilsSvs.dismissLoading();
       })
     }
+  }
+
+  emailDomainValidator(control: FormControl) {
+    const email = control.value;
+    if (email && email.indexOf('@') !== -1) {
+      const [_, domain] = email.split('@');
+      if (domain !== 'duocuc.cl' && domain !== 'profesor.duocuc.cl') {
+        return { invalidDomain: true };
+      }
+    }
+    return null;
   }
 }
