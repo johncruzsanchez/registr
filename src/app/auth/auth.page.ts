@@ -39,7 +39,7 @@ export class AuthPage implements OnInit {
           
         }
 
-        this.utilsSvs.setElementInLocalstorage('user', ); ///user
+        this.utilsSvs.setElementInLocalstorage('user',user ); ///user
         this.utilsSvs.routerLink('/tabs/home')
 
         this.utilsSvs.dismissLoading();

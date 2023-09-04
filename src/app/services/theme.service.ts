@@ -9,6 +9,8 @@ export class ThemeService {
   darkMode = new BehaviorSubject(false);
 
   constructor() { }
+
+
   setInitialTheme() {
     let darkMode = JSON.parse(localStorage.getItem('darkMode'));
     if (darkMode) {

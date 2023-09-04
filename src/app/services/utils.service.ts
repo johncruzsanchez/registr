@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController, AlertOptions, LoadingController, LoadingOptions, ToastController, ToastOptions } from '@ionic/angular';
 
 
@@ -30,8 +30,8 @@ async dismissLoading(){
 
 ///local storage
 //set
-setElementInLocalstorage (key: string){
-  return localStorage. setItem(key,JSON.stringify(Element))
+setElementInLocalstorage (key: string, element: any){
+  return localStorage. setItem(key,JSON.stringify(element))
 }
 
 //get
