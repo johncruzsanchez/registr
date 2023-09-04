@@ -1,6 +1,14 @@
-<ion-content>
 
-  <app-header BackButton="/auth"> </app-header>
+
+<ion-content>
+  
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <app-header defaultHref="/auth">  </app-header>
   <app-logo></app-logo>
 
   <h2 class="ion-text-center ion-no-margin">nuevo usuario</h2>

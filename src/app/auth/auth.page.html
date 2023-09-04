@@ -10,7 +10,7 @@
       <form (keyup.enter)=" sudmit()" (ngSubmit)="sudmit()" class="ion-text-center">
 
 
-        <app-custom-imput [control]="form.controls.email" type="email" label="Correo" icon="mail-outline"></app-custom-imput>
+        <app-custom-imput [control]="form.controls.email" type="email" label="Correo"  icon="mail-outline"></app-custom-imput>
         <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.dirty">
           <div *ngIf="form.controls.email.errors?.['required']">Ingresa tu email</div>
           <div *ngIf="form.controls.email.errors?.['email']">ingresa un email valido</div>
@@ -30,9 +30,8 @@
 
 
         <div class="sing-up">
-          <div>
-            <a href="/src/app/forgot-password/forgot-password.page.html">¿se te olvido la contraseña?</a></div>
-          <div>¿se te olvido la contraseña?¿No tienes cuenta ?</div>
+     
+          <div color="light">¿se te olvido la contraseña?¿No tienes cuenta ?</div>
 
           <ion-button routerLink="forgot-password" class="ion-margin-vertical" shape="round">
             Recuperar 
@@ -47,7 +46,6 @@
       </form>
     </div>
 
-
   </div>
-
+ 
 </ion-content>
