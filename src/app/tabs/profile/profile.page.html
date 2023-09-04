@@ -1,25 +1,15 @@
 
-
-<ion-content>
+<ion-content *ngIf="user">
   <app-header title="perfil"></app-header>
-
-
-<div class="content ion-text-center">
-
-
-  <ion-icon class="avatar" name="person-circle-outline"></ion-icon>
-<h2>{{user.name}} </h2>
-<div> {{user.email}}</div>
-
-
-
-  <ion-button (click)="signOut()" shape="roud">
-    Cerrar cesion
-    <ion-icon slot="end" name="log-out-outline"></ion-icon>
-  </ion-button>
-</div>
-
-
-
-
+  <div class="content ion-text-center">
+    <ion-icon class="avatar" name="person-circle-outline"></ion-icon>
+    <h2>{{ user.name }}</h2>
+    <div>{{ user.email }}</div>
+    <ion-button (click)="signOut()" shape="round">
+      Cerrar sesión
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+    </ion-button>
+    <ion-img class="image" height="60" width="120" src="https://cdn.discordapp.com/attachments/450132398613594134/1148073270571184188/Captura_de_pantalla_2023-09-03_224724.png"></ion-img>
+  </div>
 </ion-content>
+      

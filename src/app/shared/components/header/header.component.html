@@ -1,6 +1,6 @@
 
 
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border" [ngClass]="{'dark-theme': darkMode.value}">
   <ion-toolbar [color]="color ? color : 'primary' ">
 <!--cerrar -->
     <ion-buttons *ngIf = "backButton" slot="start">

@@ -30,7 +30,15 @@
 
 
         <div class="sing-up">
-          <div>¿No tienes cuenta ?</div>
+          <div>
+            <a href="/src/app/forgot-password/forgot-password.page.html">¿se te olvido la contraseña?</a></div>
+          <div>¿se te olvido la contraseña?¿No tienes cuenta ?</div>
+
+          <ion-button routerLink="forgot-password" class="ion-margin-vertical" shape="round">
+            Recuperar 
+            <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
+          </ion-button>
+
           <ion-button routerLink="sing-up" class="ion-margin-vertical" shape="round">
             Registrate
             <ion-icon slot="end" name="person-add-outline"></ion-icon>

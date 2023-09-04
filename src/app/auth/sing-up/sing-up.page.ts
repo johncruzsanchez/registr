@@ -26,9 +26,9 @@ export class SingUpPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.confirmpasswordValidator()
+    this.confirmPasswordValidator()
   }
-  confirmpasswordValidator() {
+  confirmPasswordValidator() {
     this.form.controls.confirmPassword.setValidators([
       Validators.required,
       CustomValidators.matchValues(this.form.controls.password)
@@ -44,7 +44,7 @@ export class SingUpPage implements OnInit {
       this.firebaseSvc.singUP(this.form.value as User).then(async res => {
         console.log(res);
 
-        await this.firebaseSvc.updateUser({ displayNAme: this.form.value.name })
+        await this.firebaseSvc.updateUser({ displayName: this.form.value.name })
 
         let user: User = {
           uid: res.user.uid,
@@ -52,13 +52,13 @@ export class SingUpPage implements OnInit {
           email: res.user.email,
         }
 
-        this.utilsSvs.setElementInLocalstorage('user', user); 
+        this.utilsSvs.setElementInLocalstorage( 'user', user); 
         this.utilsSvs.routerLink('/tabs/home')
 
         this.utilsSvs.dismissLoading();
 
         this.utilsSvs.presentToast({
-          message: 'te damos la bienvenida ${user.name} ',
+          message: 'te damos la bienvenida `${user.name}` ' ,
           duration: 1500,
           color: 'primary',
           icon: 'person-outline',
@@ -68,7 +68,7 @@ export class SingUpPage implements OnInit {
         this.utilsSvs.presentToast({
           message: 'error',
           duration: 1500,
-          color: 'primary',
+          color: 'danger',
           icon: 'alert-circle-outline',
         })
 

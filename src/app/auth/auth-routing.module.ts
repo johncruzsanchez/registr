@@ -10,7 +10,11 @@ const routes: Routes = [
   },{
     path: 'sing-up',
     loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule)
+  },{
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
+  
  
 ];
 

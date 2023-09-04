@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from '../models/user.model';
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile, sendPasswordResetEmail } from "firebase/auth";
 import { UtilsService } from './utils.service';
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +22,7 @@ export class FirebaseService {
   }
 
   singUP(user: User) {
-    return this.auth.signInWithEmailAndPassword(user.email, user.password)
+    return this.auth.createUserWithEmailAndPassword(user.email, user.password)
   }
 
   updateUser(user: any) {
@@ -42,7 +40,10 @@ async signOut(){
   localStorage.removeItem('user');
 }
 
-
+sendPasswordResetEmail(email: string) {
+  const auth = getAuth();
+  return sendPasswordResetEmail(auth, email); // Utiliza sendPasswordResetEmail para enviar el correo de recuperación
+}
 
 
 

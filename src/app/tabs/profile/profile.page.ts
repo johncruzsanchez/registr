@@ -21,12 +21,9 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
   }
 
-  ionVieWillEnter(){
-    this.getUser()
+  ionViewWillEnter() {
+    this.getUser();
   }
-
-
-
 
 getUser(){
   return this.user = this.utilsSvc.getElementFromLocalStorage('user')

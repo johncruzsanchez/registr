@@ -1,7 +1,7 @@
 # registr
 npm install
 npm install @angular/fire firebase --save
-
+npm install firebase @angular/fire
 
 
 
