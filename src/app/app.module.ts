@@ -26,7 +26,6 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { MatChipsModule } from '@angular/material/chips';
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -40,7 +39,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     RegistroComponent,
     PerfilComponent
   ],
-  entryComponents: [],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
@@ -52,7 +50,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserAnimationsModule,
     MatChipsModule,
     MatCheckboxModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorker.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
