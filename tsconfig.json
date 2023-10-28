@@ -19,8 +19,9 @@
     "target": "es2022",
     "module": "es2020",
     "lib": [
-      "es2018", 
-      "dom"
+      "es2018",
+      "dom",
+      "es2015"  // Añadido es2015
     ],
     "useDefineForClassFields": false
   },

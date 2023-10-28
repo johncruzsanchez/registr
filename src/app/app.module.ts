@@ -6,28 +6,58 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-// =====fire ======
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from 'src/environments/environment';
-import{ AngularFireAuthModule } from '@angular/fire/compat/auth';
-import{ AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home/home.component';
+import { ResultadosComponent } from './pages/resultados/resultados.component';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDUH1Nt4U2LyCJCLmlu37ah8xby2pDhRBY",
-  authDomain: "registr-6cd30.firebaseapp.com",
-  projectId: "registr-6cd30",
-  storageBucket: "registr-6cd30.appspot.com",
-  messagingSenderId: "185834797744",
-  appId: "1:185834797744:web:59d1203d9d722da6959975"
-}
+import { MenuComponent } from './components/menu/menu.component';
+import { ResultadoComponent } from './components/resultado/resultado.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AjustesComponent } from './backend/ajustes/ajustes.component';
+import { RegistroComponent } from './pages/registro/registro.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
+
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+import { MatChipsModule } from '@angular/material/chips';
+
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, 
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ResultadosComponent,
+    MenuComponent,
+    ResultadoComponent,
+    LoginComponent,
+    AjustesComponent,
+    RegistroComponent,
+    PerfilComponent
+  ],
+  entryComponents: [],
+  imports: [
+    BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
-    AngularFireModule.initializeApp( environment.firebaseConfig),
+    FormsModule,
+    AngularFireAuthModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    BrowserAnimationsModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

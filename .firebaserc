@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "registrapp-e256f": {
+      "hosting": {
+        "app": [
+          "registrapp-e256f"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "registrapp-e256f"
+  }
+}
