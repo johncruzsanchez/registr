@@ -6,10 +6,10 @@
   <app-logo></app-logo>
   <div class="content ion-text-center">
     <ion-icon class="avatar" name="person-circle-outline"></ion-icon>
-    <h2>{{ user.name }}</h2>
+    <div> </div>
+    <h2>  {{ user.role }}: {{ user.name }} </h2>
     <div>Email: {{ user.email }}</div>
     <div>RUT: {{ user.rut }}</div>
-    <div>Role: {{ user.role }}</div>
     <div>Teléfono: {{ user.telefono }}</div>
     <ion-button color="danger" (click)="signOut()" shape="round">
       Cerrar sesión

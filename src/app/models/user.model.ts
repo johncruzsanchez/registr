@@ -3,7 +3,7 @@ export interface User {
   password: string;
   uid?: string;
   name: string;
-  role: 'alumno' | 'profesor';
+  role: 'Alumno' | 'Profesor';
   telefono: string;
   rut: string; 
 }

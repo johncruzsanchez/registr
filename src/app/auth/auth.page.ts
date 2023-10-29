@@ -38,7 +38,7 @@ export class AuthPage implements OnInit {
             name: '', // Esto debería ser proporcionado por el usuario, probablemente desde el formulario.
             email: res.user.email, // El email vendrá de la autenticación.
             password: '', // Esto no debería almacenarse en texto plano.
-            role: 'alumno', // Esto debería ser seleccionado por el usuario, probablemente desde el formulario.
+            role: 'Alumno', // Esto debería ser seleccionado por el usuario, probablemente desde el formulario.
             telefono: '', // Esto debería ser proporcionado por el usuario, probablemente desde el formulario.
             rut: '' // Esto debería ser proporcionado por el usuario, probablemente desde el formulario.
           };
@@ -76,7 +76,7 @@ export class AuthPage implements OnInit {
       })
     }
   }
-
+  
   emailDomainValidator(control: FormControl) {
     const email = control.value;
     if (email && email.indexOf('@') !== -1) {
@@ -87,4 +87,18 @@ export class AuthPage implements OnInit {
     }
     return null;
   }
+  user: any;
+  getUser() {
+    const userId = this.utilsSvs.getElementFromLocalStorage('user').uid;
+  
+    if (userId) {
+      this.firebaseSvc.getUserById(userId).subscribe(user => {
+        if (user) {
+          this.user = user;
+        }
+      });
+    }
+    
+  }
+  
 }

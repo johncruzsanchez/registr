@@ -18,6 +18,7 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getUser();
   }
 
   ionViewWillEnter() {
@@ -25,11 +26,16 @@ export class ProfilePage implements OnInit {
   }
 
   getUser() {
-    this.user = this.utilsSvc.getElementFromLocalStorage('user');
-    this.user.rut = 'valor_de_rut'; // Asigna el valor del rut aquí
-    return this.user;
+    const userId = this.utilsSvc.getElementFromLocalStorage('user').uid;
+  
+    if (userId) {
+      this.firebasSvc.getUserById(userId).subscribe(user => {
+        if (user) {
+          this.user = user;
+        }
+      });
+    }
   }
-
   signOut() {
     this.utilsSvc.presentAlert({
       header: 'Cerrar Sesión',
@@ -49,4 +55,4 @@ export class ProfilePage implements OnInit {
       ]
     });
   }
-}
+};

@@ -53,7 +53,7 @@ export class SingUpPage implements OnInit {
           email: this.form.get('email')!.value,
           password: this.form.get('password')!.value,
           name: this.form.get('name')!.value,
-          role: this.form.get('role')!.value === 'alumno' ? 'alumno' : 'profesor', 
+          role: this.form.get('role')!.value === 'Alumno' ? 'Alumno' : 'Profesor', 
           telefono: this.form.get('telefono')!.value,
           rut: this.form.get('rut')!.value
         };
