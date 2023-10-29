@@ -1,14 +1,14 @@
 {
   "targets": {
-    "registrapp-e256f": {
+    "registr-6cd30": {
       "hosting": {
         "app": [
-          "registrapp-e256f"
+          "registr-6cd30"
         ]
       }
     }
   },
   "projects": {
-    "default": "registrapp-e256f"
+    "default": "registr-6cd30"
   }
 }

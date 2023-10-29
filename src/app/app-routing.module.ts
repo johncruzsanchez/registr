@@ -1,30 +1,33 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AjustesComponent } from './backend/ajustes/ajustes.component';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { PerfilComponent } from './pages/perfil/perfil.component';
-import { RegistroComponent } from './pages/registro/registro.component';
-import { ResultadosComponent } from './pages/resultados/resultados.component';
-import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
-import { map } from 'rxjs/operators';
-import { canActivate } from '@angular/fire/compat/auth-guard';
-
-const uidAdmin = 'd1PEtAiS9oSEyOdRsKTH7gMxDDH3';
-const onlyAdmin = () => map( (user: any) => !!user && (user.uid === uidAdmin) );
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from'./guards/no-auth.guard';
 
 const routes: Routes = [
+ 
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule), canActivate: [NoAuthGuard]
+  },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./auth/forgot-password/forgot-password.module').then(m => m.ForgotPasswordPageModule)
+  },
+  
 
-  { path: 'home', component: HomeComponent},
-  { path: 'resultados', component: ResultadosComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'ajustes', component: AjustesComponent, ...canActivate(onlyAdmin)},
-  { path: 'registro', component: RegistroComponent},
-  { path: 'perfil', component: PerfilComponent,  canActivate: [AngularFireAuthGuard]},
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-
-
+  
+  
+  
+  
 ];
 
 @NgModule({

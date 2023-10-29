@@ -2,15 +2,11 @@
 npm install
 npm install @angular/fire firebase --save
 npm install firebase @angular/fire
-npm install @angular/material @ionic/angular
-npm install @angular/material @angular/cdk
-npm install @ionic/angular
-npm install tslib
-npm audit fix
-ng update @angular/core@latest
-npm install @ionic/angular@latest
 
 
+
+por alguna razon ya dejo de funcionar,  al parecer las rutas de algunas manera no estan bien y aun no se puede solucionar. 
+estaba funcionando muy bien hasta llego a resgistar dos usarios y dejo logearse pero por alguna motivo ya no se puede
 
 
 

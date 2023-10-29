@@ -1,0 +1,71 @@
+
+
+<ion-content>
+  
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <app-header defaultHref="/auth">  </app-header>
+  <app-logo></app-logo>
+
+  <h2 class="ion-text-center ion-no-margin">nuevo usuario</h2>
+
+  <div class="content">
+    <div class="d-flex-center">
+
+
+      <form (submit)="submit()" class="ion-text-center">
+        <app-custom-imput [control]="form.controls.name" type="text" label="Nombre" icon="person-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.dirty">
+          <div *ngIf="form.controls.name.errors?.['required']">Ingresa tu nombre</div>
+          <div *ngIf="form.controls.name.errors?.['minlength']">Ingresa un nombre válido</div>
+        </div>
+      
+        <app-custom-imput [control]="form.controls.rut" type="text" label="Rut" icon="person-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.rut.errors && form.controls.rut.dirty">
+          <div *ngIf="form.controls.rut.errors?.['required']">Ingresa tu rut</div>
+        </div>
+      
+        <app-custom-imput [control]="form.controls.telefono" type="tel" label="Teléfono" icon="call-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.telefono.errors && form.controls.telefono.dirty">
+          <div *ngIf="form.controls.telefono.errors?.['required']">Ingresa tu teléfono</div>
+        </div>
+      
+        <app-custom-imput [control]="form.controls.role" type="text" label="Tipo" icon="person-outline"></app-custom-imput>
+    <div class="validators" *ngIf="form.controls.role.errors && form.controls.role.dirty">
+      <div *ngIf="form.controls.role.errors?.['required']">Ingresa el tipo</div>
+    </div>
+      
+        <app-custom-imput [control]="form.controls.email" type="email" label="Correo" icon="mail-outline">
+          <input type="email" pattern="^[a-zA-Z0-9._%+-]+@(duocuc\.cl|profesor\.duoc\.cl)$">
+        </app-custom-imput>
+        <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.dirty">
+          <div *ngIf="form.controls.email.errors?.['required']">Ingresa tu correo electrónico</div>
+          <div *ngIf="form.controls.email.errors?.['pattern']">Ingresa un correo electrónico válido (@duocuc.cl o @profesor.duoc.cl)</div>
+        </div>
+      
+        <app-custom-imput [control]="form.controls.password" type="password" label="Contraseña" icon="lock-closed-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.dirty">
+          <div *ngIf="form.controls.password.errors?.['required']">Ingresa tu contraseña</div>
+        </div>
+      
+        <app-custom-imput [control]="form.controls.confirmPassword" type="password" label="Confirmar contraseña" icon="checkmark-circle-outline"></app-custom-imput>
+        <div class="validators" *ngIf="form.controls.confirmPassword.errors && form.controls.confirmPassword.dirty">
+          <div *ngIf="form.controls.confirmPassword.errors?.['required']">Ingresa tu confirmación de contraseña</div>
+          <div *ngIf="form.controls.confirmPassword.errors?.['noMatch']">Las contraseñas no coinciden</div>
+        </div>
+      
+        <ion-button class="ion-margin-vertical" [disabled]="form.invalid" type="submit" shape="round">
+          Registrarse
+          <ion-icon slot="end" name="person-add-outline"></ion-icon>
+        </ion-button>
+      </form>
+    </div>
+
+
+  </div>
+
+</ion-content>
