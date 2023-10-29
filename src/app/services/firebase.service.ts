@@ -12,6 +12,9 @@ import { User as FirebaseUser } from 'firebase/auth';
   providedIn: 'root'
 })
 export class FirebaseService {
+  getUserName(uid: string) {
+    throw new Error('Method not implemented.');
+  }
   private usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
 
