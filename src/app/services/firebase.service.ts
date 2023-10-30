@@ -27,11 +27,11 @@ export class FirebaseService {
     this.users = this.usersCollection.valueChanges({ idField: 'uid' });
   }
 
-  async assignUserRole(user: FirebaseUser) {
+ async assignUserRole(user: FirebaseUser) {
     try {
       const userClaims = await user.getIdTokenResult();
       const role = userClaims.claims['role'];
-
+      console.log('Role asignado:', role);
       return role || null;
     } catch (error) {
       console.error('Error al asignar el rol:', error);
@@ -148,4 +148,6 @@ export class FirebaseService {
       throw error;
     }
   }
+
+  
 }
