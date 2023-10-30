@@ -9,35 +9,36 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  userRole: string = '';
-  form: FormGroup;
+  userRole: string = ''; // Variable para almacenar el rol del usuario
+  form: FormGroup; // Formulario para agregar clases
   clases: any[] = []; // Variable para almacenar las clases
 
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService
   ) {
+    // Configura el formulario con validadores
     this.form = this.fb.group({
       nombreClase: ['', [Validators.required]],
       horaInicio: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]],
       horaTermino: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]],
       fechaClase: ['', [Validators.required,Validators.pattern(/^(Lunes|Martes|Miercoles|Jueves|Viernes|Sabado|Domingo)$/)]],
-
     });
   }
 
   ngOnInit() {
-    // Obtener el rol del usuario
+    // Obtener el rol del usuario cuando se inicia la página
     this.firebaseService.getAuthState().subscribe(user => {
       if (user) {
         this.firebaseService.assignUserRole(user).then(role => {
           this.userRole = role || '';
-          this.loadClases();
+          this.loadClases(); // Carga las clases después de obtener el rol
         });
       }
     });
   }
   
+  // Función para agregar una nueva clase
   agregarClase() {
     if (this.form.valid) {
       const nombreClase = this.form.get('nombreClase').value;
@@ -57,6 +58,7 @@ export class HomePage implements OnInit {
     }
   }
   
+  // Función para cargar las clases desde Firebase
   loadClases() {
     this.firebaseService.getClases().subscribe({
       next: (data) => {
@@ -68,6 +70,4 @@ export class HomePage implements OnInit {
       }
     });
   }
-
-
-}
+};

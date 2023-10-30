@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./sing-up.page.scss'],
 })
 export class SingUpPage implements OnInit {
+  // Define un formulario con controles para el registro de usuarios
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     rut: new FormControl('', [Validators.required]),
@@ -26,9 +27,11 @@ export class SingUpPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Asigna un validador personalizado para la confirmación de contraseña
     this.form.get('confirmPassword')?.setValidators(this.confirmPasswordValidator.bind(this));
   }
 
+  // Validador personalizado para la confirmación de contraseña
   confirmPasswordValidator(control: FormControl) {
     const passwordControl = this.form.get('password');
     const confirmPasswordControl = this.form.get('confirmPassword');
@@ -44,11 +47,13 @@ export class SingUpPage implements OnInit {
     return null;
   }
 
+  // Función que se ejecuta cuando se envía el formulario de registro
   async submit() {
     if (this.form.valid) {
       this.utilsSvs.presentLoading({ message: 'Registrando....' });
   
       try {
+        // Prepara los datos para el registro
         const signUpData: User = {
           email: this.form.get('email')!.value,
           password: this.form.get('password')!.value,
@@ -58,9 +63,11 @@ export class SingUpPage implements OnInit {
           rut: this.form.get('rut')!.value
         };
   
+        // Crea el usuario en la autenticación de Firebase
         const uid = await this.firebaseSvc.createUserInAuthentication(signUpData);
 
         if (uid) {
+          // Prepara el perfil del usuario
           const userProfile = {
             email: signUpData.email,
             name: signUpData.name,
@@ -75,12 +82,15 @@ export class SingUpPage implements OnInit {
             password: signUpData.password,
           };
 
+          // Crea el perfil del usuario en Firestore
           await this.firebaseSvc.createUserProfileInFirestore(uid, userProfile);
 
+          // Guarda el usuario en el almacenamiento local
           this.utilsSvs.setElementInLocalstorage('user', user);
           this.utilsSvs.routerLink('/tabs/home');
           this.utilsSvs.dismissLoading();
 
+          // Muestra un mensaje de bienvenida
           this.utilsSvs.presentToast({
             message: `Te damos la bienvenida ${userProfile.name}`,
             duration: 2500,
@@ -88,6 +98,7 @@ export class SingUpPage implements OnInit {
             icon: 'person-outline',
           });
 
+          // Reinicia el formulario
           this.form.reset();
         } else {
           throw new Error('No se pudo crear el usuario en Authentication');

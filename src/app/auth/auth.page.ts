@@ -11,6 +11,7 @@ import { User } from '../models/user.model';
 })
 export class AuthPage implements OnInit {
 
+  // Define un formulario con controles de email y contraseña
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email, this.emailDomainValidator]),
     password: new FormControl('', [Validators.required]),
@@ -24,9 +25,13 @@ export class AuthPage implements OnInit {
   ngOnInit() {
   }
 
+  // Función que se ejecuta cuando se envía el formulario
   submit() {
     if (this.form.valid) {
+      // Muestra un mensaje de carga mientras se autentica al usuario
       this.utilsSvs.presentLoading({ message: 'Autenticando....' })
+
+      // Intenta autenticar al usuario usando el servicio Firebase
       this.firebaseSvc.login(this.form.value as User).then(async res => {
         console.log('Resultado de la autenticación:', res);
   
@@ -35,17 +40,21 @@ export class AuthPage implements OnInit {
   
           let user: User = {
             uid: res.user.uid,
-            name: '', // Esto debería ser proporcionado por el usuario, probablemente desde el formulario.
-            email: res.user.email, // El email vendrá de la autenticación.
-            password: '', // Esto no debería almacenarse en texto plano.
-            role: 'Alumno', // Esto debería ser seleccionado por el usuario, probablemente desde el formulario.
-            telefono: '', // Esto debería ser proporcionado por el usuario, probablemente desde el formulario.
-            rut: '' // Esto debería ser proporcionado por el usuario, probablemente desde el formulario.
+            name: '', 
+            email: res.user.email, 
+            password: '', 
+            role: 'Alumno', 
+            telefono: '', 
+            rut: '' 
           };
+          // Guarda el usuario en el almacenamiento local
           this.utilsSvs.setElementInLocalstorage('user', user);
+
+          // Redirige al usuario a la página principal
           this.utilsSvs.routerLink('/tabs/home')
           this.utilsSvs.dismissLoading();
 
+          // Muestra un mensaje de bienvenida
           this.utilsSvs.presentToast({
             message: `Te damos la bienvenida ${user.name}`,
             duration: 2500,
@@ -77,6 +86,7 @@ export class AuthPage implements OnInit {
     }
   }
   
+  // Validador personalizado de dominio de correo electrónico
   emailDomainValidator(control: FormControl) {
     const email = control.value;
     if (email && email.indexOf('@') !== -1) {
@@ -87,7 +97,11 @@ export class AuthPage implements OnInit {
     }
     return null;
   }
+
+  // Variable para almacenar el usuario autenticado
   user: any;
+
+  // Función para obtener el usuario autenticado
   getUser() {
     const userId = this.utilsSvs.getElementFromLocalStorage('user').uid;
   
@@ -97,8 +111,6 @@ export class AuthPage implements OnInit {
           this.user = user;
         }
       });
-    }
-    
-  }
-  
-}
+    }  
+  };
+};

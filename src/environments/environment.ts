@@ -5,8 +5,8 @@
 
 
 import { initializeApp } from 'firebase/app';
-// Asegúrate de que esta es la ruta correcta, y elimina la importación duplicada
 
+// Exporta la configuración del entorno (incluye la configuración de Firebase)
 export const environment = {
   firebase: {
     projectId: 'registr-6cd30',
@@ -17,6 +17,8 @@ export const environment = {
     messagingSenderId: '185834797744',
   },
   production: false,
+
+  // Configuración específica de Firebase
   firebaseConfig: {
     apiKey: "AIzaSyDUH1Nt4U2LyCJCLmlu37ah8xby2pDhRBY",
     authDomain: "registr-6cd30.firebaseapp.com",
@@ -27,6 +29,7 @@ export const environment = {
   }
 };
 
+// Inicializa la aplicación Firebase con la configuración proporcionada
 initializeApp(environment.firebaseConfig);
 /*
  * For easier debugging in development mode, you can import the following file
