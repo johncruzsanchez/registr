@@ -1,14 +1,55 @@
-
- 
 <ion-content >
     <ion-card class="custom-card2">
         <ion-card-header>
             <h1  >RegistrAPP</h1>
         </ion-card-header>
+      </ion-card> 
+      <ion-card class="ion-padding custom-card clase-del-icono-de-hora ">
+        <form [formGroup]="form" class="ion-padding">
+          <ion-item>
+            <ion-label>Nombre de la Clase</ion-label>
+            <ion-input formControlName="nombreClase"  placeholder="Escribe un nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Nombre de la Clase</ion-label>
+            <ion-input formControlName="fechaClase"  placeholder="Escribe el dia"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Hora de Inicio</ion-label>
+            <ion-input formControlName="horaInicio" type="time" ></ion-input>
+            
+          </ion-item>
+          <ion-item>
+            <ion-label>Hora de Termino</ion-label>
+            <ion-input  formControlName="horaTermino" type="time"></ion-input>
+          </ion-item>
+          <ion-button (click)="agregarClase()" expand="block">Agregar Clase</ion-button>
+        </form>
+      </ion-card>
+
+      <ion-card class="ion-padding custom-card">
+        <ion-list *ngIf="clases && clases.length > 0">
+          <ion-item *ngFor="let clase of clases">
+            <ion-label>{{ clase.nombre }}</ion-label>
+            <ion-note slot="end">{{ clase.horaInicio }} - {{ clase.horaTermino }} | {{ clase.fechaClase }}</ion-note>
+          </ion-item>
+        </ion-list>
+        <ion-text *ngIf="!clases || clases.length === 0" class="ion-text-center">No hay clases disponibles.</ion-text>
       </ion-card>
       
+      
+      <!-- Sección de no autorizado  -->
+        <ion-card class="ion-padding custom-card" *ngIf="!userRole || (userRole !== 'alumno' && userRole !== 'profesor')" >
+          <ion-card-header>
+            Acceso no autorizado
+          </ion-card-header>
+          <ion-card-content>
+            No tienes permisos para ver esta sección.
+          </ion-card-content>
+        </ion-card>
+
         <!-- Sección de Horarios de Clases alumno -->
-        <ion-card *ngIf="userRole === 'alumno'" class="custom-card">
+        <ion-card *ngIf="" class="custom-card">
           <ion-card-header>
             Horarios de Clases para Alumnos
             <div>horaios mas la asistencia </div>
@@ -17,7 +58,7 @@
           </ion-card-content>
         </ion-card>
    <!-- Cámara para Códigos QR -->
-        <ion-card *ngIf="userRole === 'alumno'"class="custom-card">
+        <ion-card *ngIf=""class="custom-card">
           <ion-card-header>
             Escanear Códigos QR
           </ion-card-header>
@@ -31,7 +72,7 @@
         </ion-card>
 
         <!-- Sección de Horarios de Clases profesor -->
-        <ion-card *ngIf="userRole === 'profesor'" class="custom-card">
+        <ion-card *ngIf="" class="custom-card">
           <ion-card-header>
             Horarios de Clases para Profesores
             <div>horario profesor mas assietncia de los estudiantes </div>
@@ -39,7 +80,8 @@
           <ion-card-content>
           </ion-card-content>
         </ion-card>
-        <ion-card *ngIf="userRole === 'profesor'" class="custom-card">
+
+        <ion-card *ngIf="" class="ion-padding custom-card">
           <ion-card-header>
             
             <div>chaooo</div>
@@ -47,20 +89,4 @@
           <ion-card-content>
           </ion-card-content>
         </ion-card>
-
-
-        <!-- Sección de no autorizado  -->
-        <ion-card *ngIf="!userRole || (userRole !== 'alumno' && userRole !== 'profesor')" class="custom-card">
-          <ion-card-header>
-            Acceso no autorizado
-          </ion-card-header>
-          <ion-card-content>
-            No tienes permisos para ver esta sección.
-          </ion-card-content>
-        </ion-card>
-        
-  
-  
-    
-
-  </ion-content>
+</ion-content>

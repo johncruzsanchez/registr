@@ -81,3 +81,6 @@ ion-header {
     color: var(--ion-color-light);
     /* Otros estilos para el tema oscuro */
   }
+  ion-datetime {
+    --color: #000000; // Cambia este valor al color que desees
+  }

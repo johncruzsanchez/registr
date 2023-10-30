@@ -21,24 +21,42 @@ export class FirebaseService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private utilsSvc: UtilsService
+    private utilsSvc: UtilsService,
+    private firestore: AngularFirestore
   ) {
     this.usersCollection = this.db.collection<User>('usuarios');
     this.users = this.usersCollection.valueChanges({ idField: 'uid' });
   }
 
- async assignUserRole(user: FirebaseUser) {
+  async assignUserRole(user: FirebaseUser) {
     try {
-      const userClaims = await user.getIdTokenResult();
-      const role = userClaims.claims['role'];
-      console.log('Role asignado:', role);
-      return role || null;
+      const userDoc$ = this.db.collection('usuarios').doc<User>(user.uid).get();
+      userDoc$.subscribe((userDoc) => {
+        const userData = userDoc.data();
+        const role = userData?.role;
+        console.log('Role asignado:', role);
+        return role || null;
+      });
     } catch (error) {
       console.error('Error al asignar el rol:', error);
       return null;
     }
   }
-
+  async getUserRole(uid: string): Promise<string | null> {
+    try {
+      const userDoc = await this.db.collection('usuarios').doc(uid).get().toPromise();
+      const userData: any = userDoc.data(); // Especificamos 'any' como tipo
+  
+      if (userData && userData.role) {
+        return userData.role;
+      }
+  
+      return null;
+    } catch (error) {
+      console.error('Error al obtener el rol del usuario:', error);
+      return null;
+    }
+  }
   async login(user: User) {
     try {
       const res = await this.auth.signInWithEmailAndPassword(user.email, user.password);
@@ -64,7 +82,7 @@ export class FirebaseService {
           displayName: user.name,
           role: user.role 
         });
-  
+
         const userData: User = {
           uid: userCredential.uid,
           name: user.name,
@@ -148,6 +166,17 @@ export class FirebaseService {
       throw error;
     }
   }
+  agregarClase(nombre: string, horaInicio: string, horaTermino: string,fechaClase:string) {
+    return this.firestore.collection('clases').add({
+      nombre: nombre,
+      horaInicio: horaInicio,
+      horaTermino: horaTermino,
+      fechaClase:fechaClase
+    });}
 
-  
+    getClases(): Observable<any[]> {
+      console.log('Obteniendo clases...');
+      return this.firestore.collection('clases').valueChanges();
+    }
+    
 }
