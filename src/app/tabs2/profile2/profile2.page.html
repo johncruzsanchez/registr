@@ -1,0 +1,16 @@
+<ion-content *ngIf="user">
+  <app-header title="perfil"></app-header>
+  <app-logo></app-logo>
+  <div class="content ion-text-center">
+    <ion-icon class="avatar" name="person-circle-outline"></ion-icon>
+    <div> </div>
+    <h2>  {{ user.role }}: {{ user.name }} </h2>
+    <div>Email: {{ user.email }}</div>
+    <div>RUT: {{ user.rut }}</div>
+    <div>Teléfono: {{ user.telefono }}</div>
+    <ion-button color="danger" (click)="signOut()" shape="round">
+      Cerrar sesión
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>
