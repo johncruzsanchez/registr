@@ -1,31 +1,11 @@
+   <!-- Sección de alumno   -->
 <ion-content >
   <ion-card class="custom-card2">
       <ion-card-header>
           <h1  >RegistrAPP</h1>
       </ion-card-header>
     </ion-card> 
-    <ion-card class="ion-padding custom-card clase-del-icono-de-hora ">
-      <form [formGroup]="form" class="ion-padding">
-        <ion-item>
-          <ion-label>Nombre de la Clase</ion-label>
-          <ion-input formControlName="nombreClase"  placeholder="Escribe un nombre"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Nombre de la Clase</ion-label>
-          <ion-input formControlName="fechaClase"  placeholder="Escribe el dia"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Hora de Inicio</ion-label>
-          <ion-input formControlName="horaInicio" type="time" ></ion-input>
-          
-        </ion-item>
-        <ion-item>
-          <ion-label>Hora de Termino</ion-label>
-          <ion-input  formControlName="horaTermino" type="time"></ion-input>
-        </ion-item>
-        <ion-button (click)="agregarClase()" expand="block">Agregar Clase</ion-button>
-      </form>
-    </ion-card>
+    
 
     <ion-card class="ion-padding custom-card">
       <ion-list *ngIf="clases && clases.length > 0">
@@ -38,15 +18,8 @@
     </ion-card>
     
     
-    <!-- Sección de no autorizado  -->
-      <ion-card class="ion-padding custom-card" *ngIf="!userRole || (userRole !== 'alumno' && userRole !== 'profesor')" >
-        <ion-card-header>
-          Acceso no autorizado
-        </ion-card-header>
-        <ion-card-content>
-          No tienes permisos para ver esta sección.
-        </ion-card-content>
-      </ion-card>
+ 
+     
 
       <!-- Sección de Horarios de Clases alumno -->
       <ion-card *ngIf="" class="custom-card">
@@ -57,19 +30,7 @@
         <ion-card-content>
         </ion-card-content>
       </ion-card>
- <!-- Cámara para Códigos QR -->
-      <ion-card *ngIf=""class="custom-card">
-        <ion-card-header>
-          Escanear Códigos QR
-        </ion-card-header>
-        <ion-card-content>
-          <ion-tab-button >
-              <ion-icon name="camera"></ion-icon>
-              <ion-label class="ion-text-center" >Photo    <ion-img class="image" height="60" width="120" src="https://cdn.discordapp.com/attachments/450132398613594134/1148202143027834970/Codigo-QR-07.gif"></ion-img>
-              </ion-label>
-          </ion-tab-button>
-        </ion-card-content>
-      </ion-card>
+ 
 
       <!-- Sección de Horarios de Clases profesor -->
       <ion-card *ngIf="" class="custom-card">

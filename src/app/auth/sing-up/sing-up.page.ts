@@ -16,7 +16,7 @@ export class SingUpPage implements OnInit {
     rut: new FormControl('', [Validators.required]),
     telefono: new FormControl('', [Validators.required]),
     role: new FormControl('alumno', [Validators.required]), // Cambiado a 'alumno'
-    email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|profesor\.duoc\.cl)$/)]),
+    email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|profesor\.duocuc\.cl)$/)]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required])
   });

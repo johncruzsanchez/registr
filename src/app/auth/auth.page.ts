@@ -15,7 +15,7 @@ export class AuthPage implements OnInit {
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email, this.emailDomainValidator]),
     password: new FormControl('', [Validators.required]),
-  })
+  });
 
   constructor(
     private firebaseSvc: FirebaseService,
@@ -29,39 +29,61 @@ export class AuthPage implements OnInit {
   submit() {
     if (this.form.valid) {
       // Muestra un mensaje de carga mientras se autentica al usuario
-      this.utilsSvs.presentLoading({ message: 'Autenticando....' })
+      this.utilsSvs.presentLoading({ message: 'Autenticando....' });
 
       // Intenta autenticar al usuario usando el servicio Firebase
       this.firebaseSvc.login(this.form.value as User).then(async res => {
         console.log('Resultado de la autenticación:', res);
-  
+
         if (res && res.user) {
           console.log('Usuario autenticado:', res.user);
-  
-          let user: User = {
-            uid: res.user.uid,
-            name: '', 
-            email: res.user.email, 
-            password: '', 
-            role: 'Alumno', 
-            telefono: '', 
-            rut: '' 
-          };
-          // Guarda el usuario en el almacenamiento local
-          this.utilsSvs.setElementInLocalstorage('user', user);
 
-          // Redirige al usuario a la página principal
-          this.utilsSvs.routerLink('/tabs/home')
-          this.utilsSvs.dismissLoading();
+          // Obtén el rol del usuario
+          const role = await this.firebaseSvc.getUserRole(res.user.uid);
 
-          // Muestra un mensaje de bienvenida
-          this.utilsSvs.presentToast({
-            message: `Te damos la bienvenida ${user.name}`,
-            duration: 2500,
-            color: 'primary',
-            icon: 'person-outline',
-          })
-          this.form.reset()
+          if (role) {
+            // Verifica el rol y redirige a la vista correspondiente
+            if (role === 'Alumno') {
+              this.utilsSvs.routerLink('/tabs2/home2'); // Redirige a la vista de alumnos
+            } else if (role === 'Profesor') {
+              this.utilsSvs.routerLink('/tabs/home'); // Redirige a la vista de profesores
+            }
+
+            // Guarda el usuario en el almacenamiento local
+            this.utilsSvs.setElementInLocalstorage('user', {
+              uid: res.user.uid,
+              name: '',
+              email: res.user.email,
+              password: '',
+              role: 'Alumno',
+              telefono: '',
+              rut: ''
+            });
+
+            // Redirige al usuario a la página principal
+            this.utilsSvs.dismissLoading();
+
+            // Muestra un mensaje de bienvenida
+            this.utilsSvs.presentToast({
+              message: `Te damos la bienvenida ${res.user.email}`,
+              duration: 2500,
+              color: 'primary',
+              icon: 'person-outline',
+            });
+
+            this.form.reset();
+
+          } else {
+            console.log('Error: No se encontró el rol del usuario');
+            this.utilsSvs.dismissLoading();
+            this.utilsSvs.presentToast({
+              message: 'Error: No se encontró el rol del usuario',
+              duration: 1500,
+              color: 'primary',
+              icon: 'alert-circle-outline',
+            });
+            this.utilsSvs.dismissLoading();
+          }
         } else {
           console.log('No se encontró el usuario');
           this.utilsSvs.dismissLoading();
@@ -70,7 +92,7 @@ export class AuthPage implements OnInit {
             duration: 1500,
             color: 'primary',
             icon: 'alert-circle-outline',
-          })
+          });
           this.utilsSvs.dismissLoading();
         }
       }, error => {
@@ -81,11 +103,11 @@ export class AuthPage implements OnInit {
           duration: 1500,
           color: 'primary',
           icon: 'alert-circle-outline',
-        })
-      })
+        });
+      });
     }
   }
-  
+
   // Validador personalizado de dominio de correo electrónico
   emailDomainValidator(control: FormControl) {
     const email = control.value;
@@ -104,13 +126,13 @@ export class AuthPage implements OnInit {
   // Función para obtener el usuario autenticado
   getUser() {
     const userId = this.utilsSvs.getElementFromLocalStorage('user').uid;
-  
+
     if (userId) {
       this.firebaseSvc.getUserById(userId).subscribe(user => {
         if (user) {
           this.user = user;
         }
       });
-    }  
+    }
   };
-};
+}
