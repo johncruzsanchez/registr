@@ -7,7 +7,7 @@ npm install -g firebase-tools
 npm install -g cordova
 npm install ion2-calendar --save --force
 
-
+npm i cordova-plugin-qrscanner
 
 npm install phonegap-plugin-barcodescanner
 npm install @ionic-native/barcode-scanner --force

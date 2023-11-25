@@ -16,38 +16,11 @@
       </ion-list>
       <ion-text *ngIf="!clases || clases.length === 0" class="ion-text-center">No hay clases disponibles.</ion-text>
     </ion-card>
-    
+    <ion-button expand="full" (click)="scanQR()">Escanear QR</ion-button>
+
     
  
      
 
-      <!-- Sección de Horarios de Clases alumno -->
-      <ion-card *ngIf="" class="custom-card">
-        <ion-card-header>
-          Horarios de Clases para Alumnos
-          <div>horaios mas la asistencia </div>
-        </ion-card-header>
-        <ion-card-content>
-        </ion-card-content>
-      </ion-card>
- 
-
-      <!-- Sección de Horarios de Clases profesor -->
-      <ion-card *ngIf="" class="custom-card">
-        <ion-card-header>
-          Horarios de Clases para Profesores
-          <div>horario profesor mas assietncia de los estudiantes </div>
-        </ion-card-header>
-        <ion-card-content>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card *ngIf="" class="ion-padding custom-card">
-        <ion-card-header>
-          
-          <div>chaooo</div>
-        </ion-card-header>
-        <ion-card-content>
-        </ion-card-content>
-      </ion-card>
+      
 </ion-content>

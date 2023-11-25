@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 @Component({
   selector: 'app-home2',
@@ -15,7 +16,8 @@ export class Home2Page implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private qrScanner: QRScanner // Agrega el servicio del escáner QR
   ) {
     // Configura el formulario con validadores
     this.form = this.fb.group({
@@ -69,5 +71,27 @@ export class Home2Page implements OnInit {
         console.error('Error al cargar las clases:', error);
       }
     });
+  }
+  // Función para escanear un código QR
+  scanQR() {
+    this.qrScanner.prepare()
+      .then((status: QRScannerStatus) => {
+        if (status.authorized) {
+          // La cámara está autorizada y lista para escanear
+          const scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            console.log('Código QR escaneado:', text);
+            this.qrScanner.hide(); // Esconde la vista de la cámara
+            scanSub.unsubscribe(); // Deja de escuchar los resultados del escaneo
+          });
+
+          this.qrScanner.show(); // Muestra la vista de la cámara
+
+        } else if (status.denied) {
+          // El permiso fue denegado (preguntar al usuario para que lo habilite manualmente)
+        } else {
+          // Otra condición (permisos bloqueados por alguna razón)
+        }
+      })
+      .catch((e: any) => console.error('Error al preparar el escáner QR:', e));
   }
 };
