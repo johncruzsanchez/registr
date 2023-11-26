@@ -3,6 +3,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import * as QRCode from 'qrcode';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +16,13 @@ export class HomePage implements OnInit {
   clases: any[] = []; // Variable para almacenar las clases
   qrCodeImageUrl: string;
   qrCodeLink: string; // propiedad para almacenar el enlace QR
-  
+  private inAppBrowser: InAppBrowser // Importa InAppBrowser
+
   constructor(
     private fb: FormBuilder,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    
+    
   ) {
     //el formulario con validadores
     this.form = this.fb.group({
@@ -74,6 +78,13 @@ export class HomePage implements OnInit {
     });
   }
 
+
+  abrirEnlace() {
+    if (this.qrCodeLink) {
+      const browser = this.inAppBrowser.create(this.qrCodeLink, '_system');
+      // '_system' abre el enlace en el navegador del sistema del dispositivo
+    }
+  }
    // función para generar un código QR
    async generateQRCode() {
     const qrData = 'http://localhost:8100'; // Reemplaza con tu enlace
