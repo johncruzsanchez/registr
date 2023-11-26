@@ -99,3 +99,9 @@ app/src/main/assets/public
 app/src/main/assets/capacitor.config.json
 app/src/main/assets/capacitor.plugins.json
 app/src/main/res/xml/config.xml
+
+# Esta línea especifica la ubicación del SDK de Android
+sdk.dir=C\:\\Users\\migra\\AppData\\Local\\Android\\Sdk
+
+# También puedes agregar la siguiente línea para especificar la ubicación del NDK si lo estás utilizando
+# ndk.dir=C\:\\Users\\migra\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529

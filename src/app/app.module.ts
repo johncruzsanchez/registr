@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 
 const firebaseConfig = {
@@ -40,7 +41,7 @@ const firebaseConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ],
-  providers: [QRScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [AndroidPermissions,QRScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
