@@ -34,6 +34,7 @@
     "firebase": "^10.5.2",
     "ion2-calendar": "^3.5.0",
     "ionicons": "^7.0.0",
+    "qrcode": "^1.5.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

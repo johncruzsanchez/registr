@@ -38,6 +38,19 @@
         <ion-text *ngIf="!clases || clases.length === 0" class="ion-text-center">No hay clases disponibles.</ion-text>
       </ion-card>
       
-      
+
+<ion-card class="ion-padding custom-card">
+  <ion-list *ngIf="clases && clases.length > 0">
     
+      <ion-button (click)="generarCodigoQR()" expand="block">Generar Código QR</ion-button>
+      <ion-img [src]="qrCodeImageUrl" *ngIf="qrCodeImageUrl"></ion-img>
+      <ion-card class="ion-padding custom-card">
+        <p *ngIf="qrCodeLink">Enlace QR: {{ qrCodeImageUrl }}</p>
+      </ion-card>
+  </ion-list>
+  <ion-text *ngIf="!clases || clases.length === 0" class="ion-text-center">No hay clases disponibles.</ion-text>
+</ion-card>
+
+
+
 </ion-content>

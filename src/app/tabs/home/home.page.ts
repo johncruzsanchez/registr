@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-home',
@@ -12,12 +13,14 @@ export class HomePage implements OnInit {
   userRole: string = ''; // Variable para almacenar el rol del usuario
   form: FormGroup; // Formulario para agregar clases
   clases: any[] = []; // Variable para almacenar las clases
-
+  qrCodeImageUrl: string;
+  qrCodeLink: string; // propiedad para almacenar el enlace QR
+  
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService
   ) {
-    // Configura el formulario con validadores
+    //el formulario con validadores
     this.form = this.fb.group({
       nombreClase: ['', [Validators.required]],
       horaInicio: ['', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)]],
@@ -70,4 +73,24 @@ export class HomePage implements OnInit {
       }
     });
   }
+
+   // función para generar un código QR
+   async generateQRCode() {
+    const qrData = 'http://localhost:8100'; // Reemplaza con tu enlace
+    try {
+      const canvas = await QRCode.toCanvas(qrData, { width: 200 });
+      const imageUrl = canvas.toDataURL();
+      this.qrCodeImageUrl = imageUrl;
+      this.qrCodeLink = qrData; // Actualiza la propiedad qrCodeLink
+      console.log('URL del código QR:', imageUrl);
+    } catch (error) {
+      console.error('Error al generar el código QR:', error);
+    }
+  }
+  
+  // Nueva función para generar el código QR en respuesta a un evento
+  generarCodigoQR() {
+    this.generateQRCode();
+  }
+
 };
