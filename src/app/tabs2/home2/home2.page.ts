@@ -76,12 +76,36 @@ export class Home2Page implements OnInit {
   }
   // Función para escanear un código QR
   scanQR() {
+    this.checkCameraPermission().then((status: any) => {
+      if (status.hasPermission) {
+        this.startQRScan();
+      } else {
+        console.log('El usuario ha denegado los permisos de cámara');
+        // Puedes mostrar un mensaje al usuario para que habilite los permisos desde la configuración del dispositivo.
+      }
+    });
+  }
+
+  checkCameraPermission(): Promise<any> {
+    return this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA)
+      .then(
+        result => {
+          console.log('Tiene permisos de cámara?', result.hasPermission);
+          return result;
+        },
+        err => {
+          console.error('Error al verificar los permisos de cámara:', err);
+          throw err;
+        }
+      );
+  }
+
+  startQRScan() {
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
-          // La cámara está autorizada, procede con el escaneo
           this.qrScanner.show();
-          document.getElementsByTagName('body')[0].style.display = 'none'; // Oculta el contenido detrás de la cámara
+          document.getElementsByTagName('body')[0].style.display = 'none';
 
           const scanSub = this.qrScanner.scan().subscribe((text: string) => {
             console.log('Código QR escaneado:', text);
@@ -89,27 +113,19 @@ export class Home2Page implements OnInit {
             // Lógica adicional según tus necesidades
 
             this.qrScanner.hide();
-            document.getElementsByTagName('body')[0].style.display = 'block'; // Restaura el contenido oculto
-            scanSub.unsubscribe(); // Detiene la suscripción al escáner después de un escaneo exitoso
+            document.getElementsByTagName('body')[0].style.display = 'block';
+            scanSub.unsubscribe();
           });
 
         } else if (status.denied) {
-          // Permiso denegado por el usuario
-          // Puedes mostrar un mensaje al usuario para pedirle que habilite el permiso desde la configuración
+          console.log('El usuario ha denegado los permisos de cámara');
+          // Puedes mostrar un mensaje al usuario para que habilite los permisos desde la configuración del dispositivo.
         } else {
-          // Otra condición (status.restricted, status.notDetermined) 
+          // Otra condición (status.restricted, status.notDetermined)
           // Puedes manejarla según tus necesidades
         }
       })
       .catch((e: any) => console.log('Error al preparar el escáner QR:', e));
-  }
-  // Verificación y solicitud de permisos de cámara
-  checkCameraPermission() {
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA)
-      .then(
-        result => console.log('Tiene permisos de cámara?', result.hasPermission),
-        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
-      );
   }
 
 };
