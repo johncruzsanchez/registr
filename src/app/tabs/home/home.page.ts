@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import * as QRCode from 'qrcode';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-home',
@@ -16,13 +18,13 @@ export class HomePage implements OnInit {
   clases: any[] = []; // Variable para almacenar las clases
   qrCodeImageUrl: string;
   qrCodeLink: string; // propiedad para almacenar el enlace QR
-  private inAppBrowser: InAppBrowser // Importa InAppBrowser
+  private inAppBrowser: InAppBrowser = new InAppBrowser();
 
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
-    
-    
+    private clipboardService: ClipboardService,
+
   ) {
     //el formulario con validadores
     this.form = this.fb.group({
@@ -81,18 +83,24 @@ export class HomePage implements OnInit {
 
   abrirEnlace() {
     if (this.qrCodeLink) {
-      const browser = this.inAppBrowser.create(this.qrCodeLink, '_system');
-      // '_system' abre el enlace en el navegador del sistema del dispositivo
+      const options: InAppBrowserOptions = {
+        location: 'yes',
+        clearcache: 'yes',
+        clearsessioncache: 'yes',
+        toolbar: 'yes',
+      };
+  
+      const browser = this.inAppBrowser.create(this.qrCodeLink, '_system', options);
     }
   }
-   // función para generar un código QR
-   async generateQRCode() {
-    const qrData = 'http://localhost:8100'; // Reemplaza con tu enlace
+  async generateQRCode() {
+    // Supongamos que qrData es el enlace directo a la imagen generada
+    const qrData = 'https://www.ejemplo.com/ruta/a/tu/imagenQR.png'; // Reemplaza con tu lógica para obtener la información real
     try {
       const canvas = await QRCode.toCanvas(qrData, { width: 200 });
       const imageUrl = canvas.toDataURL();
       this.qrCodeImageUrl = imageUrl;
-      this.qrCodeLink = qrData; // Actualiza la propiedad qrCodeLink
+      this.qrCodeLink = qrData; // Actualiza la propiedad qrCodeLink con el enlace directo a la imagen
       console.log('URL del código QR:', imageUrl);
     } catch (error) {
       console.error('Error al generar el código QR:', error);
@@ -103,5 +111,7 @@ export class HomePage implements OnInit {
   generarCodigoQR() {
     this.generateQRCode();
   }
-
+  copiarEnlace() {
+    this.clipboardService.copyFromContent(this.qrCodeImageUrl);
+  }
 };

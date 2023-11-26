@@ -25,19 +25,26 @@
             <ion-input  formControlName="horaTermino" type="time"></ion-input>
           </ion-item>
           <ion-button (click)="agregarClase()" expand="block">Agregar Clase</ion-button>
-        </form>
-      </ion-card>
-
-
-      <ion-card class="ion-padding custom-card">
-        <ion-list *ngIf="clases && clases.length > 0">
           <ion-button (click)="generarCodigoQR()" expand="block">Generar Código QR</ion-button>
-          <ion-img (click)="abrirEnlace()" [src]="qrCodeImageUrl" *ngIf="qrCodeImageUrl"></ion-img>
-          <ion-card class="ion-padding custom-card">
-            <p *ngIf="qrCodeLink">Enlace QR: {{ qrCodeLink }}</p>
-          </ion-card>
-        </ion-list>
+            <ion-img *ngIf="qrCodeImageUrl" [src]="qrCodeImageUrl"></ion-img>
+            <ion-card class="ion-padding custom-card">
+              <ion-button *ngIf="qrCodeImageUrl">
+                <a [href]="qrCodeImageUrl" download="codigo_qr.png">
+                  Descargar Código QR
+                </a>
+              </ion-button>
+              <ion-button *ngIf="qrCodeImageUrl" (click)="copiarEnlace()">
+                Copiar Enlace
+              </ion-button>
+            </ion-card>
+        </form>
+        
+            
+      
       </ion-card>
+
+
+      
 
 
       <ion-card class="ion-padding custom-card">
